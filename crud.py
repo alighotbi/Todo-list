@@ -1,18 +1,18 @@
 from sqlalchemy.orm import Session
-from  .models import Todo
+import models
 import schemas
 
 # Gets all the todo items from the database
 def get_all_todos(db:Session):
-    return db.query(Todo).all()
+    return db.query(models.Todo).all()
 
 # Gets a single todo item by ID.
 def get_todo(db:Session, todo_id : int):
-    return db.query(Todo).filter(Todo.id==todo_id).first()
+    return db.query(models.Todo).filter(models.Todo.id==todo_id).first()
 
 # Adds a new todo to the database.
 def create_todo(db:Session, todo : schemas.TodoCreate):
-    db_todo = Todo(**todo.model_dump())
+    db_todo = models.Todo(**todo.model_dump())
     db.add(db_todo)
     db.commit()
     db.refresh(db_todo)

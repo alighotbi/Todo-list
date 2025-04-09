@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from .models  import Todo
-import schemas, crud
+# from .models  import Todo
+import models, schemas, crud
 from database import SessionLocal, engine, Base
 
 Base.metadata.create_all(bind=engine)
@@ -22,7 +22,7 @@ def create(todo : schemas.TodoCreate, db : Session = Depends(get_db)):
     return crud.create_todo(db , todo)
 
 
-@app.get('/todos/', response_model=list(schemas.TodoOut))
+@app.get('/todos/', response_model=list[schemas.TodoOut])
 def read_all(db : Session = Depends(get_db)):
     return crud.get_all_todos(db)
 
